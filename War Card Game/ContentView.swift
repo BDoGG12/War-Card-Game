@@ -8,7 +8,15 @@
 import SwiftUI
 
 struct ContentView: View {
+    
+    @State var playerCard = "card7"
+    @State var cpuCard = "card13"
+    
+    @State var playerScore = 0
+    @State var cpuScore = 0
+    
     var body: some View {
+        
         ZStack {
             Image("background-plain")
                 .resizable()
@@ -16,18 +24,24 @@ struct ContentView: View {
             VStack {
                 Image("logo")
                 HStack {
-                    Image("card2")
+                    Image(playerCard)
                         .padding()
-                    Image("card3")
+                    Image(cpuCard)
                 }
                 .padding()
-                Image("button")
+                
+                Button(action: {
+                    deal()
+                }, label: {
+                    Image("button")
+                })
+                
                 HStack {
                     VStack {
                         Text("Player")
                             .font(.system(size: 20))
                             .padding()
-                        Text("0")
+                        Text("\(playerScore)")
                             .font(.system(size: 40))
                             .padding()
                     }
@@ -36,7 +50,7 @@ struct ContentView: View {
                         Text("CPU")
                             .font(.system(size: 20))
                             .padding()
-                        Text("0")
+                        Text("\(cpuScore)")
                             .font(.system(size: 40))
                             .padding()
                     }
@@ -48,6 +62,23 @@ struct ContentView: View {
         }
         
         
+    }
+    
+    func deal() {
+        var playerRandomNum = Int.random(in: 2...14)
+        var cpuRandomNum = Int.random(in: 2...14)
+        // Randomize the players card
+        playerCard = "card\(playerRandomNum)"
+        
+        // Randomize the cpu card
+        cpuCard = "card\(cpuRandomNum)"
+        
+        // Update the scores
+        if (playerRandomNum > cpuRandomNum) {
+            playerScore += 1
+        } else {
+            cpuScore += 1
+        }
     }
 }
 
